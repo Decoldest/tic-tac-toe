@@ -34,22 +34,23 @@ const gameBoard = (function() {
   return { addMoveToBoard, getBoard, printBoard };
 })();
 
-gameBoard.addMoveToBoard('x',1,1);
-gameBoard.printBoard();
+// gameBoard.addMoveToBoard('x', 1, 1);
+// gameBoard.printBoard();
 
 
 function gameControl() {
 
   const board = gameBoard;
-  players = [];
+  let players = [];
 
   function createPlayer (name, piece) {
-    return { name,piece };
+    return { name, piece };
   }
 
   const addPlayersToGame = (playersData) => {
-    const players = playersData.map(player => createPlayer(player.name, player.piece));
+    players = playersData.map(player => createPlayer(player.name, player.piece));
     console.log(`players are ${players[0].piece} ${players[1].piece}`);
+    console.log(players[0]);
   }
   
   let currentPlayer = players[0];
@@ -60,6 +61,9 @@ function gameControl() {
 
   const playerTurn = (x, y) => {
     board.addMoveToBoard(currentPlayer, x, y);
+
+    //checkWinner();
+
     switchCurrentPlayer();
     board.printBoard();
   };
@@ -71,3 +75,6 @@ gameControl().addPlayersToGame([
   { name: 'John', piece: 'X' },
   { name: 'Jane', piece: 'O' }
 ]);
+
+gameControl().playerTurn(2, 1)
+//gameControl().checkWinner();
