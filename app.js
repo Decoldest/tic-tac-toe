@@ -34,8 +34,8 @@ const gameBoard = (function() {
   return { addMoveToBoard, getBoard, printBoard };
 })();
 
-console.log(gameBoard.addMoveToBoard('x',1,1));
-console.log(gameBoard.printBoard());
+gameBoard.addMoveToBoard('x',1,1);
+gameBoard.printBoard();
 
 
 function gameControl() {
@@ -48,7 +48,7 @@ function gameControl() {
   }
 
   const getControllerBoard = () => {
-    board.getBoard;
+    board.printBoard();
   }
 
   const addPlayersToGame = () => {
@@ -67,3 +67,5 @@ function gameControl() {
 
   return { switchCurrentPlayer, playerTurn, getControllerBoard };
 }
+
+gameControl().getControllerBoard();
