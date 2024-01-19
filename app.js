@@ -8,8 +8,8 @@ const gameBoard = (function() {
   const getBoard = () => board;
 
   const addMoveToBoard = (player, positionX, positionY) => {
-    const checkEmptySpace = board[positionX][positionY];
-    if (!checkEmptySpace) {
+    const checkEmptySpace = board[positionX][positionY].getValue();
+    if (checkEmptySpace) {
       return;
     } else {
       board[positionX][positionY].addPlayerToSpace(player);
@@ -39,6 +39,7 @@ function createPlayer (piece) {
   return { piece };
 }
 
-console.log(gameBoard.printBoard());
+gameBoard.printBoard();
 gameBoard.addMoveToBoard('x', 1, 1);
-console.log(gameBoard.printBoard());
+gameBoard.addMoveToBoard('y', 1, 1);
+gameBoard.printBoard();
