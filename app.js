@@ -61,7 +61,7 @@ function gameControl() {
     currentPlayer = currentPlayer === players[0] ? players[1] : players[0];
   }
 
-  const playerTurn = (player, x, y) => {
+  const playerTurn = (currentPlayer, x, y) => {
     board.addMoveToBoard(currentPlayer, x, y);
   };
 
