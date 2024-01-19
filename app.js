@@ -3,7 +3,7 @@ let gridSpace = 'temp';
 const gameBoard = (function() {
   const columns = 3;
   const rows = 3;
-  const board = new Array(rows).fill(gridSpace).map(() => new Array(columns).fill(gridSpace));
+  const board = new Array(rows).fill(null).map(() => new Array(columns).fill(null).map(() => gridSpace()));
   
   const getBoard = () => board;
 
@@ -12,14 +12,33 @@ const gameBoard = (function() {
     if (!checkEmptySpace) {
       return;
     } else {
-      //AddMove
+      board[positionX][positionY].addPlayerToSpace(player);
     }
   }
 
-  return { addMoveToBoard, getBoard };
+  const printBoard = () => {
+    const boardWithCellValues = board.map((row) => row.map((gridSpace) => gridSpace.getValue()));
+    console.log(boardWithCellValues);
+  }
+
+  function gridSpace() {
+    let gridValue = null;
+    
+    const getValue = () => gridValue;
+
+    const addPlayerToSpace = (player) => gridValue = player;
+  
+    return { addPlayerToSpace, getValue };
+  }
+
+  return { addMoveToBoard, getBoard, printBoard };
 })();
 
 
 function createPlayer (piece) {
   return { piece };
 }
+
+console.log(gameBoard.printBoard());
+gameBoard.addMoveToBoard('x', 1, 1);
+console.log(gameBoard.printBoard());
