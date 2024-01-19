@@ -43,16 +43,13 @@ function gameControl() {
   const board = gameBoard;
   players = [];
 
-  function createPlayer (piece) {
-    return { piece };
+  function createPlayer (name, piece) {
+    return { name,piece };
   }
 
-  const getControllerBoard = () => {
-    board.printBoard();
-  }
-
-  const addPlayersToGame = () => {
-    players = [createPlayer('X'), createPlayer('O')]
+  const addPlayersToGame = (playersData) => {
+    const players = playersData.map(player => createPlayer(player.name, player.piece));
+    console.log(`players are ${players[0].piece} ${players[1].piece}`);
   }
   
   let currentPlayer = players[0];
@@ -61,11 +58,16 @@ function gameControl() {
     currentPlayer = currentPlayer === players[0] ? players[1] : players[0];
   }
 
-  const playerTurn = (currentPlayer, x, y) => {
+  const playerTurn = (x, y) => {
     board.addMoveToBoard(currentPlayer, x, y);
+    switchCurrentPlayer();
+    board.printBoard();
   };
 
-  return { switchCurrentPlayer, playerTurn, getControllerBoard };
+  return { addPlayersToGame, switchCurrentPlayer, playerTurn };
 }
 
-gameControl().getControllerBoard();
+gameControl().addPlayersToGame([
+  { name: 'John', piece: 'X' },
+  { name: 'Jane', piece: 'O' }
+]);
