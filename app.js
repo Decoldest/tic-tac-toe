@@ -48,7 +48,7 @@ function gameControl() {
 
   const addPlayersToGame = (playersData) => {
     players = playersData.map(player => createPlayer(player.name, player.piece));
-    console.log(`players are ${players[0].piece} ${players[1].piece}`);
+    //console.log(`players are ${players[0].piece} ${players[1].piece}`);
     currentPlayer = players[0];
   }
 
@@ -69,17 +69,16 @@ function gameControl() {
   function checkWinner () {
     const currentBoard = board.getBoard();
     //Returns true if all row values are equal (win)
-    const checkRow = row => row.every(val => val !== null && val === row[0]);    
+    const checkRowOrColumn = arr => arr.every(val => val !== null && val === arr[0]);    
 
     for(let i = 0; i < currentBoard.length; i++){
-      console.log(checkRow(currentBoard[i]));
+      const column = (currentBoard, i) => currentBoard.map(x => x[i])
+      console.log(checkRowOrColumn(column(currentBoard, i)));
+      console.log(checkRowOrColumn(currentBoard[i]));
     }
-
-    console.log("checking winner");
-    console.log(board.getBoard());
   }
 
-  return { addPlayersToGame, switchCurrentPlayer, playerTurn };
+  return { addPlayersToGame, playerTurn };
 }
 
 const game = gameControl();
@@ -89,3 +88,10 @@ game.addPlayersToGame([
   { name: 'Player 2', piece: 'O' }
 ]);
 game.playerTurn(2, 1);
+game.playerTurn(1, 2);
+game.playerTurn(2, 0);
+game.playerTurn(1, 1);
+game.playerTurn(2, 2);
+
+
+
