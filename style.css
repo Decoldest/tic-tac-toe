@@ -1,1 +1,19 @@
 @import url(normalize.css);
+
+main>h2 {
+  text-align: center;
+}
+
+.board-container {
+  width: 75svh;
+  height: 75svh;
+  border: 1px solid red;
+  margin: auto;
+  margin-top: 3%;
+  display: grid;
+  grid: repeat(3, 1fr) / repeat(3, 1fr); 
+}
+
+.board-container>div {
+  border: 1px solid grey;
+}

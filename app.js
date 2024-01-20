@@ -57,25 +57,39 @@ function gameControl() {
   }
 
   const playerTurn = (x, y) => {
-    console.log(currentPlayer);
+    //console.log(currentPlayer);
     board.addMoveToBoard(currentPlayer, x, y);
 
     checkWinner();
 
     switchCurrentPlayer();
-    console.log(board.getBoard());
+    //console.log(board.getBoard());
   };
 
   function checkWinner () {
     const currentBoard = board.getBoard();
-    //Returns true if all row values are equal (win)
-    const checkRowOrColumn = arr => arr.every(val => val !== null && val === arr[0]);    
+    //Returns true if all values in a line are equal (win)
+    const checkAllEqual = arr => arr.every(val => val !== null && val === arr[0]);    
 
     for(let i = 0; i < currentBoard.length; i++){
-      const column = (currentBoard, i) => currentBoard.map(x => x[i])
-      console.log(checkRowOrColumn(column(currentBoard, i)));
-      console.log(checkRowOrColumn(currentBoard[i]));
+      const column = (currentBoard, i) => currentBoard.map(x => x[i]);
+      console.log(column(currentBoard, i));
+      if (checkAllEqual(column(currentBoard, i)) || checkAllEqual(currentBoard[i])){
+        console.log("wotks");
+      }
+      
+      return true; 
     }
+    //Returm true if diagonal values equal
+    function checkDiagonal(start, step) {
+      return checkAllEqual(currentBoard[start][0], currentBoard[start + step][1], currentBoard[start+step*2][2]);
+    } 
+
+    checkDiagonal(2, -1);
+    checkDiagonal(0, 1);
+
+    //Return false if no diagonal
+    return false;
   }
 
   return { addPlayersToGame, playerTurn };
@@ -87,10 +101,10 @@ game.addPlayersToGame([
   { name: 'Player 1', piece: 'X' },
   { name: 'Player 2', piece: 'O' }
 ]);
-game.playerTurn(2, 1);
+game.playerTurn(0, 0);
 game.playerTurn(1, 2);
-game.playerTurn(2, 0);
 game.playerTurn(1, 1);
+game.playerTurn(2, 1);
 game.playerTurn(2, 2);
 
 
