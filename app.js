@@ -69,24 +69,25 @@ function gameControl() {
   function checkWinner () {
     const currentBoard = board.getBoard();
     //Returns true if all values in a line are equal (win)
+    console.log(currentBoard[0][0]);
     const checkAllEqual = arr => arr.every(val => val !== null && val === arr[0]);    
 
     for(let i = 0; i < currentBoard.length; i++){
       const column = (currentBoard, i) => currentBoard.map(x => x[i]);
-      console.log(column(currentBoard, i));
       if (checkAllEqual(column(currentBoard, i)) || checkAllEqual(currentBoard[i])){
-        console.log("wotks");
+        console.log(currentBoard[i]);
+        return true; 
       }
-      
-      return true; 
     }
     //Returm true if diagonal values equal
-    function checkDiagonal(start, step) {
-      return checkAllEqual(currentBoard[start][0], currentBoard[start + step][1], currentBoard[start+step*2][2]);
+    function checkDiagonal(currentBoard, start, step) {
+      console.log(currentBoard[start][0]);
+      console.log(currentBoard[start + step][1]);
+      console.log(currentBoard[start+step*2][2]);
+      return checkAllEqual([currentBoard[start][0], currentBoard[start + step][1], currentBoard[start+step*2][2]]);
     } 
-
-    checkDiagonal(2, -1);
-    checkDiagonal(0, 1);
+    checkDiagonal(currentBoard, 2, -1);
+    checkDiagonal(currentBoard, 0, 1);
 
     //Return false if no diagonal
     return false;
@@ -103,9 +104,9 @@ game.addPlayersToGame([
 ]);
 game.playerTurn(0, 0);
 game.playerTurn(1, 2);
-game.playerTurn(1, 1);
+game.playerTurn(0, 1);
 game.playerTurn(2, 1);
-game.playerTurn(2, 2);
+game.playerTurn(0, 2);
 
 
 
