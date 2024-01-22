@@ -56,7 +56,6 @@ const gameControl = (function() {
   }
 
   const playerTurn = (x, y) => {
-    console.log(x + ", " + y);
     board.addMoveToBoard(currentPlayer, x, y);
 
     if (checkWinner()) {
@@ -80,19 +79,17 @@ const gameControl = (function() {
     }
     //Return true if diagonal values equal
     function checkDiagonal(currentBoard, start, step) {
-      console.log(currentBoard[0]);
-      console.log(`Checking diagonal ${currentBoard[start][0]} ${currentBoard[start + step][1]} ${currentBoard[start+step*2][2]}`);
-      return checkAllEqual([currentBoard[start][0], currentBoard[start + step][1], currentBoard[start+step*2][2]]);
+      if (checkAllEqual([currentBoard[start][0], currentBoard[start + step][1], currentBoard[start+step*2][2]])) {
+        return true;
+      }
     } 
-    checkDiagonal(currentBoard, 2, -1);
-    checkDiagonal(currentBoard, 0, 1);
+    if (checkDiagonal(currentBoard, 2, -1) || checkDiagonal(currentBoard, 0, 1)) return true;
 
     //Return false if no diagonal
     return false;
   }
 
   const getCurrentPlayer = () => {
-    console.log(currentPlayer);
     return currentPlayer;
   }
 
