@@ -119,6 +119,7 @@ const startRound = (function() {
   let playerNames;
   let boardDivButtons = Array.from(document.querySelectorAll('.board-button'));
   const gameTextOutput = document.querySelector('.game-output');
+  const playerForm = document.getElementById("player-form");
   const playerNamesModal = document.querySelector('.players');
   const resetGameButtons = document.querySelector('.reset-game-buttons');
   const resetGame = document.getElementById('reset-game');
@@ -165,10 +166,11 @@ const startRound = (function() {
   }
   
   function setNewPlayerNames () {
-    document.getElementById("player-form").addEventListener("submit", function (e){
+    playerForm.addEventListener("submit", function (e){
       e.preventDefault(); 
       playerNames = getPlayerNames(e.target);
       init(playerNames);
+      playerForm.reset();
       togglePlayerModal();
     });
   }
