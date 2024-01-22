@@ -114,6 +114,7 @@ const startRound = (function() {
         divButton.textContent = game.getCurrentPlayer().piece;
         let gridCoordinate = divButton.id.split(',').map(Number);
         game.playerTurn(gridCoordinate[0], gridCoordinate[1]);
+        divButton.classList.add('disabled');
       });
     }
   }

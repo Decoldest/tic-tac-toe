@@ -16,4 +16,12 @@ main>h2 {
 
 .board-container>div {
   border: 1px solid grey;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 5rem;
+}
+
+.disabled {
+  pointer-events:none
 }
