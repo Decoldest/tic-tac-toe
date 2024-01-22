@@ -1,5 +1,9 @@
 @import url(normalize.css);
 
+:root {
+  --piece-colour: grey;
+}
+
 main>h2 {
   text-align: center;
 }
@@ -15,13 +19,19 @@ main>h2 {
 }
 
 .board-container>div {
+  font-family: 'Fredoka', sans-serif;
   border: 1px solid grey;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 5rem;
+  color: var(--piece-colour);
 }
 
 .disabled {
-  pointer-events:none
+  pointer-events: none
+}
+
+h2 {
+  font-family: 'Noto Sans Tamil', sans-serif;
 }

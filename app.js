@@ -32,10 +32,6 @@ const gameBoard = (function() {
   return { addMoveToBoard, getBoard };
 })();
 
-// gameBoard.addMoveToBoard('x', 1, 1);
-// gameBoard.printBoard();
-
-
 const gameControl = (function() {
 
   const board = gameBoard;
@@ -60,10 +56,10 @@ const gameControl = (function() {
 
     if (checkWinner()) {
       console.log(`${currentPlayer.piece} is ${currentPlayer.name}`);
+      return currentPlayer.name;
+    } else {
+      switchCurrentPlayer();
     }
-
-    switchCurrentPlayer();
-    //console.log(board.getBoard());
   };
 
   function checkWinner () {
@@ -98,23 +94,44 @@ const gameControl = (function() {
 
 const startRound = (function() {
   const game = gameControl;
+  const boardDivButtons = Array.from(document.querySelectorAll('.board-button'));
+  let clickHandler;
 
   game.addPlayersToGame([
     { name: 'Player 1', piece: 'X' },
     { name: 'Player 2', piece: 'O' }
   ]);
 
-  function addBoardListener () {
-    const boardDivButtons = Array.from(document.querySelectorAll('.board-button'));
-    for(let divButton of boardDivButtons) {
-      divButton.addEventListener('click', () => {
-        divButton.textContent = game.getCurrentPlayer().piece;
-        let gridCoordinate = divButton.id.split(',').map(Number);
-        game.playerTurn(gridCoordinate[0], gridCoordinate[1]);
-        divButton.classList.add('disabled');
-      });
-    }
+
+function addBoardListener() {
+  clickHandler = (event) => handleBtnInput(event.target);
+  
+  for (let divButton of boardDivButtons) {
+    divButton.addEventListener('click', clickHandler);
   }
+}
+
+function handleBtnInput(divButton) {
+  divButton.textContent = game.getCurrentPlayer().piece;
+  let gridCoordinate = divButton.id.split(',').map(Number);
+  let updateBoard = game.playerTurn(gridCoordinate[0], gridCoordinate[1]);
+  checkGameWon(updateBoard);
+  divButton.classList.add('disabled');
+}
+
+const checkGameWon = (updateBoard) => {
+  console.log(updateBoard);
+  if (updateBoard) {
+    // Game is won, remove the click event listener from all buttons
+    removeBoardListeners();
+  }
+}
+
+function removeBoardListeners() {
+  for (let divButton of boardDivButtons) {
+    divButton.removeEventListener('click', clickHandler);
+  }
+}
 
   addBoardListener();
 })();
