@@ -5,6 +5,12 @@ const gameBoard = (function() {
     Array.from({ length: columns }, () => gridSpace())
   );
 
+  const resetBoard = () => {
+    boardSpaces = boardSpaces.map(row =>
+      row.map(() => gridSpace())
+    );
+  };
+
   const addMoveToBoard = (player, positionX, positionY) => {
     const checkEmptySpace = boardSpaces[positionX][positionY].getValue();
     if (checkEmptySpace) {
@@ -29,12 +35,12 @@ const gameBoard = (function() {
     return { addPlayerToSpace, getValue };
   };
 
-  return { addMoveToBoard, getBoard };
+  return { addMoveToBoard, getBoard, resetBoard };
 })();
 
 const gameControl = (function() {
 
-  const board = gameBoard;
+  let board = gameBoard;
   let players = [];
   let currentPlayer;
 
@@ -55,6 +61,7 @@ const gameControl = (function() {
     board.addMoveToBoard(currentPlayer, x, y);
 
     let currentBoard = board.getBoard();
+    console.log(currentBoard);
 
     if (checkWinner(currentBoard)) {
       return `${currentPlayer.name} Wins!`;
@@ -95,15 +102,20 @@ const gameControl = (function() {
     return currentPlayer;
   }
 
+  const resetGame = () => board.resetBoard;
+  }
+
   return { addPlayersToGame, playerTurn, getCurrentPlayer };
 })();
 
 const startRound = (function() {
-  const game = gameControl;
-  const boardDivButtons = Array.from(document.querySelectorAll('.board-button'));
+  let game;
+  let boardDivButtons = Array.from(document.querySelectorAll('.board-button'));
   const gameTextOutput = document.querySelector('.game-output');
   const playerNamesModal = document.querySelector('.players');
-  const resetGameButtons = document.querySelector('reset-game-buttons');
+  const resetGameButtons = document.querySelector('.reset-game-buttons');
+  const resetGame = document.getElementById('reset-game');
+  const changeNames = document.getElementById('change-names');
 
   let clickHandler;
 
@@ -126,8 +138,8 @@ const startRound = (function() {
   const checkGameWon = (updateBoard) => {
     if (updateBoard) {
       gameTextOutput.textContent = updateBoard;
-      // Game is won, remove the click event listener from all buttons
       removeBoardListeners();
+      resetGameButtons.classList.toggle('hidden');
     }
   }
 
@@ -135,35 +147,53 @@ const startRound = (function() {
     playerNamesModal.classList.toggle("hidden");
   }
 
-  function removeBoardListeners () {
+  const removeBoardListeners = () => {
     for (let divButton of boardDivButtons) {
-      divButton.removeEventListener('click', clickHandler);
+      divButton.classList.remove('disabled');
     }
   }
   
   function setNewPlayerNames () {
     document.getElementById("player-form").addEventListener("submit", function (e){
       e.preventDefault(); 
-      newGame(getPlayerNames(e.target));
+      newPlayerNames(getPlayerNames(e.target));
       togglePlayerModal();
     });
   }
 
-  const newGame = (playerNames) => {
-    console.log(playerNames);
+  const newPlayerNames = (playerNames) => {
     game.addPlayersToGame([
       { name: playerNames['player1'], piece: 'X' },
       { name: playerNames['player2'], piece: 'O' }
     ]);
   }
-  
+
+  const addResetButtonListener = () => {
+    resetGame.addEventListener('click', () => {
+      gameTextOutput.textContent = "Tic-Tac-Toe";
+      clearGrid();
+      game = gameControl;
+    });
+  }
+
+  const clearGrid = () => {
+    for (let divButton of boardDivButtons) {
+      divButton.textContent = '';
+    }
+  }
 
   function getPlayerNames(form) {
     return Object.fromEntries(new FormData(form));
   }
 
-  addBoardListener();
+  const init = () => {
+    game = gameControl;
+    addBoardListener();
+    addResetButtonListener();
+  }
+
   setNewPlayerNames();
+  init();
 
   return { checkGameWon }
 
