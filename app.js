@@ -54,16 +54,18 @@ const gameControl = (function() {
   const playerTurn = (x, y) => {
     board.addMoveToBoard(currentPlayer, x, y);
 
-    if (checkWinner()) {
-      console.log(`${currentPlayer.piece} is ${currentPlayer.name}`);
-      return currentPlayer.name;
+    let currentBoard = board.getBoard();
+
+    if (checkWinner(currentBoard)) {
+      return `${currentPlayer.name} Wins!`;
+    } else if (checkTie(currentBoard)){
+      return `It's A Tie!`;
     } else {
       switchCurrentPlayer();
     }
   };
 
-  function checkWinner () {
-    const currentBoard = board.getBoard();
+  function checkWinner (currentBoard) {
     //Returns true if all values in a line are equal (win)
     const checkAllEqual = arr => arr.every(val => val !== null && val === arr[0]);    
 
@@ -85,6 +87,10 @@ const gameControl = (function() {
     return false;
   }
 
+  function checkTie (currentBoard) {
+    return currentBoard.every(row => row.every(cell => cell !== null));
+  }
+
   const getCurrentPlayer = () => {
     return currentPlayer;
   }
@@ -95,6 +101,7 @@ const gameControl = (function() {
 const startRound = (function() {
   const game = gameControl;
   const boardDivButtons = Array.from(document.querySelectorAll('.board-button'));
+  const gameTextOutput = document.querySelector('.game-output');
   let clickHandler;
 
   game.addPlayersToGame([
@@ -102,36 +109,35 @@ const startRound = (function() {
     { name: 'Player 2', piece: 'O' }
   ]);
 
-
-function addBoardListener() {
-  clickHandler = (event) => handleBtnInput(event.target);
-  
-  for (let divButton of boardDivButtons) {
-    divButton.addEventListener('click', clickHandler);
+  function addBoardListener() {
+    clickHandler = (event) => handleBtnInput(event.target);
+    
+    for (let divButton of boardDivButtons) {
+      divButton.addEventListener('click', clickHandler);
+    }
   }
-}
 
-function handleBtnInput(divButton) {
-  divButton.textContent = game.getCurrentPlayer().piece;
-  let gridCoordinate = divButton.id.split(',').map(Number);
-  let updateBoard = game.playerTurn(gridCoordinate[0], gridCoordinate[1]);
-  checkGameWon(updateBoard);
-  divButton.classList.add('disabled');
-}
-
-const checkGameWon = (updateBoard) => {
-  console.log(updateBoard);
-  if (updateBoard) {
-    // Game is won, remove the click event listener from all buttons
-    removeBoardListeners();
+  function handleBtnInput(divButton) {
+    divButton.textContent = game.getCurrentPlayer().piece;
+    let gridCoordinate = divButton.id.split(',').map(Number);
+    let updateBoard = game.playerTurn(gridCoordinate[0], gridCoordinate[1]);
+    checkGameWon(updateBoard);
+    divButton.classList.add('disabled');
   }
-}
 
-function removeBoardListeners() {
-  for (let divButton of boardDivButtons) {
-    divButton.removeEventListener('click', clickHandler);
+  const checkGameWon = (updateBoard) => {
+    if (updateBoard) {
+      gameTextOutput.textContent = updateBoard;
+      // Game is won, remove the click event listener from all buttons
+      removeBoardListeners();
+    }
   }
-}
+
+  function removeBoardListeners() {
+    for (let divButton of boardDivButtons) {
+      divButton.removeEventListener('click', clickHandler);
+    }
+  }
 
   addBoardListener();
 })();
