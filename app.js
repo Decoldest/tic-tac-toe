@@ -182,12 +182,22 @@ const startRound = (function() {
 
   const addResetButtonListener = () => {
     resetGame.addEventListener('click', () => {
-      gameTextOutput.textContent = "Tic-Tac-Toe";
-      console.log("setting new game");
-      clearGrid();
+      handleNewGame();
       init(playerNames);
-      resetGameButtons.classList.toggle('hidden');
     });
+  }
+
+  const addChangeNamesButtonListener = () => {
+    changeNames.addEventListener('click', () => {
+      handleNewGame();
+      togglePlayerModal();
+    });
+  }
+
+  const handleNewGame = () => {
+    gameTextOutput.textContent = "Tic-Tac-Toe";
+    clearGrid();
+    resetGameButtons.classList.toggle('hidden');
   }
 
   const clearGrid = () => {
@@ -201,14 +211,14 @@ const startRound = (function() {
   }
 
   const init = (playerNames) => {
-    console.log(playerNames);
+    console.log("New Game");
     game = gameControl;
     addPlayersToGame(playerNames)
     addBoardListener();
   }
-  
-  addResetButtonListener();
 
+  addResetButtonListener();
+  addChangeNamesButtonListener();
   setNewPlayerNames();
 
   return { checkGameWon }
