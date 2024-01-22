@@ -164,16 +164,6 @@ const startRound = (function() {
       divButton.removeEventListener('click', clickHandler);
     }
   }
-  
-  function setNewPlayerNames () {
-    playerForm.addEventListener("submit", function (e){
-      e.preventDefault(); 
-      playerNames = getPlayerNames(e.target);
-      init(playerNames);
-      playerForm.reset();
-      togglePlayerModal();
-    });
-  }
 
   const addPlayersToGame = (playerNames) => {
     game.addPlayersToGame([
@@ -182,19 +172,23 @@ const startRound = (function() {
     ]);
   }
 
-  const addResetButtonListener = () => {
-    resetGame.addEventListener('click', () => {
-      handleNewGame();
-      init(playerNames);
-    });
-  }
+  resetGame.addEventListener('click', () => {
+    handleNewGame();
+    init(playerNames);
+  });
 
-  const addChangeNamesButtonListener = () => {
-    changeNames.addEventListener('click', () => {
-      handleNewGame();
-      togglePlayerModal();
-    });
-  }
+  changeNames.addEventListener('click', () => {
+    handleNewGame();
+    togglePlayerModal();
+  });
+
+  playerForm.addEventListener("submit", function (e){
+    e.preventDefault(); 
+    playerNames = getPlayerNames(e.target);
+    init(playerNames);
+    playerForm.reset();
+    togglePlayerModal();
+  });
 
   const handleNewGame = () => {
     gameTextOutput.textContent = "Tic-Tac-Toe";
@@ -218,12 +212,6 @@ const startRound = (function() {
     addPlayersToGame(playerNames)
     addBoardListener();
   }
-
-  addResetButtonListener();
-  addChangeNamesButtonListener();
-  setNewPlayerNames();
-
-  return { checkGameWon }
 
 })();
 
