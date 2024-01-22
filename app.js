@@ -36,7 +36,7 @@ const gameBoard = (function() {
 // gameBoard.printBoard();
 
 
-function gameControl() {
+const gameControl = (function() {
 
   const board = gameBoard;
   let players = [];
@@ -48,7 +48,6 @@ function gameControl() {
 
   const addPlayersToGame = (playersData) => {
     players = playersData.map(player => createPlayer(player.name, player.piece));
-    //console.log(`players are ${players[0].piece} ${players[1].piece}`);
     currentPlayer = players[0];
   }
 
@@ -81,6 +80,8 @@ function gameControl() {
     }
     //Return true if diagonal values equal
     function checkDiagonal(currentBoard, start, step) {
+      console.log(currentBoard[0]);
+      console.log(`Checking diagonal ${currentBoard[start][0]} ${currentBoard[start + step][1]} ${currentBoard[start+step*2][2]}`);
       return checkAllEqual([currentBoard[start][0], currentBoard[start + step][1], currentBoard[start+step*2][2]]);
     } 
     checkDiagonal(currentBoard, 2, -1);
@@ -90,26 +91,41 @@ function gameControl() {
     return false;
   }
 
-  return { addPlayersToGame, playerTurn };
-}
-
-const game = gameControl();
-
-game.addPlayersToGame([
-  { name: 'Player 1', piece: 'X' },
-  { name: 'Player 2', piece: 'O' }
-]);
-
-
-function addBoardListener () {
-  const boardButtons = Array.from(document.querySelectorAll('.board-button'));
-  for(let button of boardButtons) {
-    button.addEventListener('click', () => {
-      let gridCoordinate = button.id.split(',').map(Number);
-      game.playerTurn(gridCoordinate[0], gridCoordinate[1]);
-    });
+  const getCurrentPlayer = () => {
+    console.log(currentPlayer);
+    return currentPlayer;
   }
-}
 
-addBoardListener();
+  return { addPlayersToGame, playerTurn, getCurrentPlayer };
+})();
+
+const startRound = (function() {
+  const game = gameControl;
+
+  game.addPlayersToGame([
+    { name: 'Player 1', piece: 'X' },
+    { name: 'Player 2', piece: 'O' }
+  ]);
+
+  function addBoardListener () {
+    const boardDivButtons = Array.from(document.querySelectorAll('.board-button'));
+    for(let divButton of boardDivButtons) {
+      divButton.addEventListener('click', () => {
+        divButton.textContent = game.getCurrentPlayer().piece;
+        let gridCoordinate = divButton.id.split(',').map(Number);
+        game.playerTurn(gridCoordinate[0], gridCoordinate[1]);
+      });
+    }
+  }
+
+  addBoardListener();
+})();
+
+
+
+
+
+
+
+
 
