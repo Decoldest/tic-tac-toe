@@ -104,11 +104,6 @@ const startRound = (function() {
   const gameTextOutput = document.querySelector('.game-output');
   let clickHandler;
 
-  game.addPlayersToGame([
-    { name: 'Player 1', piece: 'X' },
-    { name: 'Player 2', piece: 'O' }
-  ]);
-
   function addBoardListener() {
     clickHandler = (event) => handleBtnInput(event.target);
     
@@ -133,14 +128,38 @@ const startRound = (function() {
     }
   }
 
-  function removeBoardListeners() {
+  function removeBoardListeners () {
     for (let divButton of boardDivButtons) {
       divButton.removeEventListener('click', clickHandler);
     }
   }
+  
+  function setNewPlayerNames () {
+    document.getElementById("player-form").addEventListener("submit", function (e){
+      e.preventDefault(); 
+      newGame(getPlayerNames(e.target));
+    });
+  }
+  function newGame(playerNames) {
+    console.log(playerNames);
+    game.addPlayersToGame([
+      { name: playerNames['player1'], piece: 'X' },
+      { name: playerNames['player2'], piece: 'O' }
+    ]);
+  }
+  
+
+  function getPlayerNames(form) {
+    return Object.fromEntries(new FormData(form));
+  }
 
   addBoardListener();
+  setNewPlayerNames();
+
+  return { checkGameWon }
+
 })();
+
 
 
 
