@@ -2,9 +2,10 @@
 
 :root {
   --piece-colour: rgb(85, 81, 97);
-  --modal-colour: rgb(235, 234, 234);
   --div-button-color: white;
   --board-background-colour: rgb(237, 219, 219);
+  --modal-colour: rgb(195, 224, 250);
+  --modal-text: rgb(56, 56, 56);
 }
 
 main>h2 {
@@ -44,25 +45,27 @@ h2 {
 }
 
 .players {
-  background-color: var(--modal-colour);
   position: absolute;
-  left: 40svw;
-  top: 20svh;
-  width: 20svw;
+  left: 32.5svw;
+  top: 25svh;
+  width: 35svw;
   padding: 1rem;
   display: flex;
   flex-direction: column;
   border-radius: 15px;
   z-index: 2;
   font-family: 'Noto Sans', sans-serif;
-  border: 2px solid red;
   box-sizing: border-box;
+  box-shadow: 1rem;
+  box-shadow: rgba(0, 0, 0, 0.24) 0 0.5rem 0.5rem;
+  background-color: var(--modal-colour)
 }
 
 .player-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  color: var(--modal-text);
 }
 
 .players form {
