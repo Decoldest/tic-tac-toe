@@ -91,7 +91,7 @@ h2 {
   border-radius: 8px;
   font-size: 0.9em;
   width: 85%;
-  background-color: #fdf5f5;
+  background-color: #fbf6f6;
 }
 
 .players input:focus {
@@ -116,4 +116,9 @@ button {
   background-color: white;
   border-radius: 5px;
   padding: 5px 2px 2px 2px;
+}
+
+button:active {
+  background-color: rgb(245, 245, 245);
+  box-shadow: rgba(0, 0.24, 0.24, 0.24) 0 0.1rem 0.1rem;
 }
