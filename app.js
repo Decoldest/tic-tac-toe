@@ -58,11 +58,9 @@ const gameControl = (function() {
   }
 
   const playerTurn = (x, y) => {
-    console.log(currentPlayer);
     board.addMoveToBoard(currentPlayer, x, y);
 
     let currentBoard = board.getBoard();
-    console.log(currentBoard);
 
     if (checkWinner(currentBoard)) {
       let winner = currentPlayer.name;
@@ -207,7 +205,6 @@ const startRound = (function() {
   }
 
   const init = (playerNames) => {
-    console.log("New Game");
     game = gameControl;
     addPlayersToGame(playerNames)
     addBoardListener();

@@ -3,9 +3,11 @@
 :root {
   --piece-colour: rgb(85, 81, 97);
   --div-button-color: white;
-  --board-background-colour: rgb(237, 219, 219);
-  --modal-colour: rgb(195, 224, 250);
+  --div-hover-color: rgb(240, 247, 255);
+  --board-background-colour: rgb(210, 237, 248);
+  --modal-colour: rgb(213, 230, 245);
   --modal-text: rgb(56, 56, 56);
+  --button-color: rgb(89, 89, 89);
 }
 
 main>h2 {
@@ -36,6 +38,10 @@ main>h2 {
   border-radius: 0.75rem;
 }
 
+.board-container>div:hover:not(.disabled) {
+  background-color: var(--div-hover-color);
+}
+
 .disabled {
   pointer-events: none
 }
@@ -58,14 +64,19 @@ h2 {
   box-sizing: border-box;
   box-shadow: 1rem;
   box-shadow: rgba(0, 0, 0, 0.24) 0 0.5rem 0.5rem;
-  background-color: var(--modal-colour)
+  background-color: var(--modal-colour);
 }
 
 .player-header {
+  font-size: 1.2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   color: var(--modal-text);
+}
+
+.player-header h3 {
+  margin: 0.5rem 0rem;
 }
 
 .players form {
@@ -80,13 +91,29 @@ h2 {
   border-radius: 8px;
   font-size: 0.9em;
   width: 85%;
+  background-color: #fdf5f5;
+}
+
+.players input:focus {
+  outline: 0.25px solid rgb(120, 208, 250);
 }
 
 .reset-game-buttons {
   margin-top: 1%;
   display: flex;
   justify-content: center;
+  gap: 2%;
 }
 .hidden {
   display: none;
+}
+
+button {
+  font-family: 'Noto Sans Tamil', sans-serif;
+  color: var(--button-color);
+  outline: none;
+  border: 1.75px solid var(--button-color);
+  background-color: white;
+  border-radius: 5px;
+  padding: 5px 2px 2px 2px;
 }
