@@ -1,8 +1,10 @@
 @import url(normalize.css);
 
 :root {
-  --piece-colour: grey;
+  --piece-colour: rgb(85, 81, 97);
   --modal-colour: rgb(235, 234, 234);
+  --div-button-color: white;
+  --board-background-colour: rgb(237, 219, 219);
 }
 
 main>h2 {
@@ -12,21 +14,25 @@ main>h2 {
 .board-container {
   width: 75svh;
   height: 75svh;
-  border: 1px solid red;
   margin: auto;
   margin-top: 3%;
   display: grid;
   grid: repeat(3, 1fr) / repeat(3, 1fr); 
+  gap: 1svh;
+  background-color: var(--board-background-colour);
+  padding: 1svh;
+  border-radius: 0.75rem;
 }
 
 .board-container>div {
   font-family: 'Fredoka', sans-serif;
-  border: 1px solid grey;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 5rem;
   color: var(--piece-colour);
+  background-color: var(--div-button-color);
+  border-radius: 0.75rem;
 }
 
 .disabled {
@@ -40,8 +46,8 @@ h2 {
 .players {
   background-color: var(--modal-colour);
   position: absolute;
-  left: 38%;
-  top: 20%;
+  left: 40svw;
+  top: 20svh;
   width: 20svw;
   padding: 1rem;
   display: flex;
@@ -49,6 +55,8 @@ h2 {
   border-radius: 15px;
   z-index: 2;
   font-family: 'Noto Sans', sans-serif;
+  border: 2px solid red;
+  box-sizing: border-box;
 }
 
 .player-header {
@@ -68,7 +76,7 @@ h2 {
   border: 1px solid #ddd;
   border-radius: 8px;
   font-size: 0.9em;
-  width: 90%;
+  width: 85%;
 }
 
 .reset-game-buttons {
