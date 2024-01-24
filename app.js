@@ -36,6 +36,7 @@ const gameBoard = (function() {
   };
 
   return { addMoveToBoard, getBoard, resetBoard };
+  
 })();
 
 const gameControl = (function() {
@@ -209,7 +210,6 @@ const startRound = (function() {
     addPlayersToGame(playerNames)
     addBoardListener();
   }
-
 })();
 
 
